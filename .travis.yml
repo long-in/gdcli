@@ -1,0 +1,7 @@
+language: go
+go:
+- 1.11.x
+- 1.12
+script:
+- go test ./
+- go build -o gdcli ./cmd/gdcli/main.go
