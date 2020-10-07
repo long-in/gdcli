@@ -1,6 +1,6 @@
 # Gehirn DNS CLI Tool
 
-[![Build Status](https://travis-ci.com/long-in/gdcli.svg?token=dbkiVyoG5DmxjumhHAKS&branch=master)](https://travis-ci.com/long-in/gdcli)
+![Go](https://github.com/long-in/gdcli/workflows/Go/badge.svg)
 
 ## Description
 
