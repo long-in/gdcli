@@ -383,9 +383,11 @@ func (addParams *addRecordRequestParam) Execute() {
 		os.Exit(2)
 	}
 
-	if addParams.Address == "" {
-		fmt.Printf("\n%s\n\n%s\n", "Please specify the --ip option.", "USAGE: gdcli record add <ZONE NAME> --type A --ip x.x.x.x --name www")
-		os.Exit(2)
+	if addParams.Type == "A" || addParams.Type == "AAAA" {
+		if addParams.Address == "" {
+			fmt.Printf("\n%s\n\n%s\n", "Please specify the --ip option.", "USAGE: gdcli record add <ZONE NAME> --type A --ip x.x.x.x --name www")
+			os.Exit(2)
+		}
 	}
 
 	zones, err := getZones()
