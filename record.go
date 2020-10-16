@@ -373,13 +373,13 @@ func generateGetRecordRequest(getParams *getRecordRequestParam, baseURL string) 
 }
 
 func (addParams *addRecordRequestParam) Execute() {
-	if addParams.Zone == "" {
+	if len(addParams.Zone) == 0 {
 		fmt.Printf("\n%s\n\n%s\n", "Please specify the zone name.", "USAGE: gdcli record add <ZONE NAME> --type A --ip x.x.x.x --name www")
 		os.Exit(2)
 	}
 
 	if addParams.Type == "A" || addParams.Type == "AAAA" {
-		if addParams.Address == "" {
+		if len(addParams.Address) == 0 {
 			fmt.Printf("\n%s\n\n%s\n", "Please specify the --ip option.", "USAGE: gdcli record add <ZONE NAME> --type A --ip x.x.x.x --name www")
 			os.Exit(2)
 		}
@@ -452,7 +452,11 @@ func generateAddRecordRequest(addParams *addRecordRequestParam, baseURL string, 
 
 func generateAddRecordRequestBody(addParams *addRecordRequestParam) *addRecordRequestBody {
 	var addParamsRB addRecordRequestBody
-	addParamsRB.Name = addParams.Name + "." + addParams.Zone + "."
+	if len(addParams.Name) == 0 {
+		addParamsRB.Name = addParams.Zone + "."
+	} else {
+		addParamsRB.Name = addParams.Name + "." + addParams.Zone + "."
+	}
 	addParamsRB.TTL = addParams.TTL
 	addParamsRB.Type = addParams.Type
 	addParamsRB.EnableAlias = false
@@ -573,6 +577,11 @@ func generateUpdateRequest(upParams *updateRecordRequestParam, baseURL string, r
 func generateUpdateRequestBody(upParams *updateRecordRequestParam) *addRecordRequestBody {
 	var addParamsRB addRecordRequestBody
 	addParamsRB.Name = upParams.Name + "." + upParams.Zone + "."
+	if len(upParams.Name) == 0 {
+		addParamsRB.Name = upParams.Zone + "."
+	} else {
+		addParamsRB.Name = upParams.Name + "." + upParams.Zone + "."
+	}
 	addParamsRB.TTL = upParams.TTL
 	addParamsRB.Type = upParams.Type
 	addParamsRB.EnableAlias = false
@@ -625,18 +634,17 @@ func (rmParams *removeRecordRequestParam) Execute() {
 				os.Exit(2)
 			}
 
-			if rmParams.Name == "" {
-				fmt.Printf("\n%s\n\n%s\n", "Please specify the --name, -n option.", "USAGE: gdcli record rm example.info --type A --name www")
-				os.Exit(0)
-			}
-
 			if len(records) == 0 {
 				fmt.Printf("%s\n", "Record not found.")
 				os.Exit(0)
 			}
 
 			for _, r := range records {
-				if r.Name == rmParams.Name+"."+rmParams.Zone+"." && rmParams.Type == r.Type {
+				fqdn := rmParams.Name + "." + rmParams.Zone + "."
+				if len(rmParams.Name) == 0 {
+					fqdn = rmParams.Zone + "."
+				}
+				if r.Name == fqdn && rmParams.Type == r.Type {
 					rmParams.ZoneID = z.ID
 					rmParams.ZoneCurrentVersionID = z.CurrentVersionID
 					rmParams.RecordID = r.ID
