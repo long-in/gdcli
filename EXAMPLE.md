@@ -2,9 +2,9 @@
 
 ```shell
 $ gdcli config init
-Create Config File: /root/.gehirun.json.sample
-$ mv /root/.gehirun.json.sample /root/.gehirun.json
-$ vim /root/.gehirun.json
+Create Config File: ~/.gehirun.json.sample
+$ mv ~/.gehirun.json.sample /root/.gehirun.json
+$ vim ~/.gehirun.json
 ```
 
 ## Zone
