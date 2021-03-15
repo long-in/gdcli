@@ -3,7 +3,7 @@
 ```shell
 $ gdcli config init
 Create Config File: ~/.gehirun.json.sample
-$ mv ~/.gehirun.json.sample /root/.gehirun.json
+$ mv ~/.gehirun.json.sample ~/.gehirun.json
 $ vim ~/.gehirun.json
 ```
 
