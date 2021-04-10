@@ -492,6 +492,18 @@ func generateAddRecordRequestBody(addParams *addRecordRequestParam) *addRecordRe
 }
 
 func (upParams *updateRecordRequestParam) Execute() {
+	if len(upParams.Zone) == 0 {
+		fmt.Printf("\n%s\n\n%s\n", "Please specify the zone name.", "USAGE: gdcli record add <ZONE NAME> --type A --ip x.x.x.x --name www")
+		os.Exit(2)
+	}
+
+	if upParams.Type == "A" || upParams.Type == "AAAA" {
+		if len(upParams.Address) == 0 {
+			fmt.Printf("\n%s\n\n%s\n", "Please specify the --ip option.", "USAGE: gdcli record add <ZONE NAME> --type A --ip x.x.x.x --name www")
+			os.Exit(2)
+		}
+	}
+
 	zones, err := getZones()
 	if err != nil {
 		fmt.Printf("getZones() %s\n", err)
@@ -515,7 +527,12 @@ func (upParams *updateRecordRequestParam) Execute() {
 			}
 
 			for _, r := range records {
-				if r.Name == upParams.Name+"."+upParams.Zone+"." && upParams.Type == r.Type {
+				fqdn := upParams.Name + "." + upParams.Zone + "."
+				if len(upParams.Name) == 0 {
+					fqdn = upParams.Zone + "."
+				}
+
+				if r.Name == fqdn && upParams.Type == r.Type {
 					upParams.ZoneID = z.ID
 					upParams.ZoneCurrentVersionID = z.CurrentVersionID
 					upParams.RecordID = r.ID
