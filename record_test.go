@@ -36,7 +36,7 @@ func TestGenerateAddRecordRequest(t *testing.T) {
 	aR.ZoneID = "xxxxxxxx-yyyy-xxxx-yyyy-xxxxxxxxxxxx"
 	aR.ZoneCurrentVersionID = "00000000-1111-2222-333333333333"
 	aR.Name = "test"
-	aR.Zone = "example.com"
+	aR.Zone = "long-in.net"
 	aR.Address = "192.168.10.1"
 	aR.TTL = 300
 	aR.Type = "A"
@@ -74,7 +74,7 @@ func TestGenerateUpdateRecordRequest(t *testing.T) {
 	upParams.ZoneCurrentVersionID = "00000000-1111-2222-333333333333"
 	upParams.RecordID = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
 	upParams.Name = "test"
-	upParams.Zone = "example.com"
+	upParams.Zone = "long-in.net"
 	upParams.Address = "192.168.10.1"
 	upParams.TTL = 300
 	upParams.Type = "A"
